@@ -4,30 +4,8 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as TodoActions from './todo.actions';
 import {catchError, map, of, switchMap, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-/*
-@Injectable()
-export class TodoEffects {
-
-  loadTodos$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(TodoActions.loadTodos),
-      switchMap(() =>
-        this.http.get<any>('https://dummyjson.com/docs/todos').pipe(
-          map(res => TodoActions.loadTodosSuccess({ todos: res.todos })),
-          catchError(error => of(TodoActions.loadTodosFailure({ error })))
-        )
-      )
-    )
-  );
-
-  constructor(
-    private actions$: Actions,
-    private http: HttpClient
-  ) {}
-}
-*/
-
 import { inject } from '@angular/core';
+import {ITodo} from './todo.model';
 
 @Injectable()
 export class TodoEffects {
@@ -35,13 +13,34 @@ export class TodoEffects {
   private actions$ = inject(Actions);
   private http = inject(HttpClient);
 
-  loadTodos$ = createEffect(() =>
+  getTodosList$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TodoActions.loadTodos),
-      switchMap(() =>
-        this.http.get<any>('https://dummyjson.com/todos').pipe(
-          map(res => TodoActions.loadTodosSuccess({ todos: res.todos })),
-          catchError(error => of(TodoActions.loadTodosFailure({ error })))
+      ofType(TodoActions.getTodos),
+      switchMap(({ page, limit }) => {
+        const skip = (page - 1) * limit;
+
+        return this.http.get<any>(
+          `https://dummyjson.com/todos?limit=${limit}&skip=${skip}`
+        ).pipe(
+          map(res => TodoActions.getTodosSuccess({
+            todos: res.todos,
+            total: res.total
+          })),
+          catchError(error => of(TodoActions.getTodosFailure({ error })))
+        );
+      })
+    )
+  );
+  editTodo$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TodoActions.editTodo),
+      switchMap(({ id, changes }) =>
+        this.http.patch<ITodo>(
+          `https://dummyjson.com/todos/${id}`,
+          changes
+        ).pipe(
+          map(todo => TodoActions.editTodoSuccess({ todo })),
+          catchError(error => of(TodoActions.editTodoFailure({ error })))
         )
       )
     )

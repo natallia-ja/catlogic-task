@@ -1,3 +1,57 @@
 <div *ngFor="let todo of todos$ | async">
-  {{ todo.todo }}
+  <todo-card
+    [id]="todo.id"
+    [todo]="todo.todo"
+    [completed]="todo.completed"
+    [userId]="todo.userId"
+    (onEditCard)="openModal(todo)"
+  >
+  </todo-card>
 </div>
+<pagination
+  [page]="page"
+  [limit]="limit"
+  [total]="(total$ | async) ?? 0"
+  (pageChange)="onPageChange($event)"
+  (limitChange)="onLimitChange($event)"
+></pagination>
+
+<modal
+  [isOpen]="isModalOpen"
+  modalTitle="Edit Todo"
+  confirmButtonName="Save"
+  cancelButtonName="Cancel"
+  (confirm)="editTodo()"
+  (cancel)="closeModal()"
+>
+  <form [formGroup]="todoForm" class="form"
+        *ngIf="selectedTodo"
+  >
+    <div
+      [ngClass]="{'red': todoForm.controls['todo'].invalid && todoForm.controls['todo'].touched}"
+      class="form-item">
+      <label>Todo</label><br>
+      <input
+        name="todo"
+        formControlName="todo"
+      />
+    </div>
+    <div class="form-item">
+      <label>Completed</label><br>
+      <input
+        name="completed"
+        type="checkbox"
+        formControlName="completed"
+      />
+    </div>
+    <div
+      [ngClass]="{'red': todoForm.controls['userId'].invalid && todoForm.controls['userId'].touched}"
+      class="form-item">
+      <label>userId</label><br>
+      <input
+        name="userId"
+        formControlName="userId"
+      />
+    </div>
+  </form>
+</modal>

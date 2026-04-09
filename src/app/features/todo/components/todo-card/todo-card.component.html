@@ -1,0 +1,31 @@
+<div class="todo-card">
+  <div class="todo-card-id">{{id || 'no data'}}</div>
+  <div class="todo-card-main">
+    <div class="todo-card-main-content">
+      <div class="todo-card-main-content-row">
+        <div class="todo-card-main-content-row-label">todo:</div>
+        <div class="todo-card-main-content-row-info">{{todo || 'no data'}}</div>
+      </div>
+      <div class="todo-card-main-content-row">
+        <div class="todo-card-main-content-row-label">completed:</div>
+        <div class="todo-card-main-content-row-info">{{completed}}</div>
+      </div>
+      <div class="todo-card-main-content-row">
+        <div class="todo-card-main-content-row-label">userId:</div>
+        <div class="todo-card-main-content-row-info">{{userId || 'no data'}}</div>
+      </div>
+    </div>
+    <div class="todo-card-main-buttons">
+      <div
+        class="edit-button"
+        (click)="editCard()"
+      >
+        <img src="/icons/edit.png" alt="">
+      </div>
+<!--      <div class="delete-button"
+           (click)="deleteCard()">
+        <img src="/icons/trash.png" alt="">
+      </div>-->
+    </div>
+  </div>
+</div>

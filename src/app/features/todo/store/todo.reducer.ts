@@ -5,24 +5,35 @@ import * as TodoActions from './todo.actions';
 export interface ITodoState {
   todos: ITodo[];
   loading: boolean;
+  total: number;
 }
 
 export const initialState: ITodoState = {
   todos: [],
-  loading: false
+  loading: false,
+  total: 0
 };
 
 export const todoReducer = createReducer(
   initialState,
 
-  on(TodoActions.loadTodos, state => ({
+  on(TodoActions.getTodos, state => ({
     ...state,
     loading: true
   })),
 
-  on(TodoActions.loadTodosSuccess, (state, { todos }) => ({
+  on(TodoActions.getTodosSuccess, (state, { todos, total }) => ({
     ...state,
     todos,
+    total,
     loading: false
+  })),
+
+  on(TodoActions.editTodoSuccess, (state, { todo }) => ({
+    ...state,
+    todos: state.todos.map(t =>
+      t.id === todo.id ? { ...t, ...todo } : t
+    )
   }))
+
 );

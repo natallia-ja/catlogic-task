@@ -1,13 +1,28 @@
 import {createAction, props} from '@ngrx/store';
 import {ITodo} from './todo.model';
 
-export const loadTodos = createAction('[Todo] Load Todos');
-export const loadTodosSuccess = createAction(
-  '[Todo] Load Todos Success',
-  props<{ todos: ITodo[] }>()
+export const getTodos = createAction('[Todo] Get Todos', props<{ page: number; limit: number }>());
+export const getTodosSuccess = createAction(
+  '[Todo] Get Todos Success',
+  props<{ todos: ITodo[]; total: number }>()
 );
 
-export const loadTodosFailure = createAction(
-  '[Todo] Load Todos Failure',
+export const getTodosFailure = createAction(
+  '[Todo] Get Todos Failure',
+  props<{ error: any }>()
+);
+
+export const editTodo = createAction(
+  '[Todo] Edit Todo',
+  props<{ id: number; changes: Partial<ITodo> }>()
+);
+
+export const editTodoSuccess = createAction(
+  '[Todo] Edit Todo Success',
+  props<{ todo: ITodo }>()
+);
+
+export const editTodoFailure = createAction(
+  '[Todo] Edit Todo Failure',
   props<{ error: any }>()
 );

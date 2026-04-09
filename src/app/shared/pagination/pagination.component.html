@@ -1,0 +1,13 @@
+<div class="pagination">
+  <button (click)="prev()">Prev</button>
+
+  <span>Page {{ page }} / {{ totalPages }}</span>
+
+  <button (click)="next()">Next</button>
+
+  <select (change)="changeLimit($event)">
+    <option [selected]="limit === 5" [value]="5">5</option>
+    <option [selected]="limit === 10" [value]="10">10</option>
+    <option [selected]="limit === 20" [value]="20">20</option>
+  </select>
+</div>
