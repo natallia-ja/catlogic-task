@@ -20,7 +20,8 @@ export class TodoEffects {
         const skip = (page - 1) * limit;
 
         return this.http.get<any>(
-          `https://dummyjson.com/todos?limit=${limit}&skip=${skip}`
+          //`https://dummyjson.com/todos?limit=${limit}&skip=${skip}`
+          `https://dummyjson.com/todos?limit=0`
         ).pipe(
           map(res => TodoActions.getTodosSuccess({
             todos: res.todos,

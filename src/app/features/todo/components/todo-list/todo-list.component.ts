@@ -2,7 +2,7 @@ import {Component, DestroyRef} from '@angular/core';
 import {Store} from '@ngrx/store';
 import * as TodoActions from '../../store/todo.actions';
 import {ITodo} from '../../store/todo.model';
-import {selectTodos, selectTotal} from '../../store/todo.selectors';
+import {selectPagedTodos, selectTodos, selectTotal} from '../../store/todo.selectors';
 import {CommonModule} from '@angular/common';
 import {TodoCardComponent} from '../todo-card/todo-card.component';
 import {Observable} from 'rxjs';
@@ -28,7 +28,8 @@ export interface IQueryParams{
 export class TodoListComponent {
 
   todos$! : Observable<ITodo[]>;
-  total$! : Observable<number>;
+  pagedTodos$! : Observable<ITodo[]>;
+  total$! : Observable<ITodo[]>;
   page: number = 1;
   limit: number = 10;
   isModalOpen: boolean = false;
@@ -42,7 +43,12 @@ export class TodoListComponent {
     private formBuilder: FormBuilder,
   ) {
     this.todos$ = this.store.select(selectTodos);
-    this.total$ = this.store.select(selectTotal)
+    this.pagedTodos$ = this.store.select(selectPagedTodos, {
+      page: this.page,
+      limit: this.limit
+    });
+    //this.total = this.todos$.
+    this.total$ = this.store.select(selectTodos)
 
     this.route.queryParams
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -58,7 +64,6 @@ export class TodoListComponent {
   }
 
   getTodos() {
-    console.log("getTodos")
     this.store.dispatch(TodoActions.getTodos({
       page: this.page,
       limit: this.limit
@@ -67,8 +72,11 @@ export class TodoListComponent {
 
   onPageChange(page: number) {
     this.page = page;
+    this.pagedTodos$ = this.store.select(selectPagedTodos, {
+      page: this.page,
+      limit: this.limit
+    });
     this.navigate();
-    this.getTodos();
   }
 
   navigate(){
@@ -85,8 +93,11 @@ export class TodoListComponent {
   onLimitChange(limit: number) {
     this.limit = limit;
     this.page = 1;
+    this.pagedTodos$ = this.store.select(selectPagedTodos, {
+      page: this.page,
+      limit: this.limit
+    });
     this.navigate();
-    this.getTodos();
   }
 
 

@@ -16,6 +16,8 @@ export class PaginationComponent {
   @Output() limitChange = new EventEmitter<number>();
 
   get totalPages(): number {
+    console.log("this.total", this.total)
+    console.log("this.this.limit", this.limit)
     return Math.ceil(this.total / this.limit);
   }
 

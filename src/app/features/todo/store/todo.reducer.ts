@@ -3,15 +3,16 @@ import {createReducer, on} from '@ngrx/store';
 import * as TodoActions from './todo.actions';
 
 export interface ITodoState {
-  todos: ITodo[];
+  todos: ITodo[];      // отфильтрованные
+  allTodos: ITodo[];   // полный список
   loading: boolean;
-  total: number;
 }
 
 export const initialState: ITodoState = {
   todos: [],
+  allTodos: [],
   loading: false,
-  total: 0
+  //total: 0
 };
 
 export const todoReducer = createReducer(
@@ -22,10 +23,10 @@ export const todoReducer = createReducer(
     loading: true
   })),
 
-  on(TodoActions.getTodosSuccess, (state, { todos, total }) => ({
+  on(TodoActions.getTodosSuccess, (state, { todos }) => ({
     ...state,
     todos,
-    total,
+    allTodos: todos,
     loading: false
   })),
 
