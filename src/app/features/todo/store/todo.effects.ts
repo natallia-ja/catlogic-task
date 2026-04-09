@@ -17,7 +17,6 @@ export class TodoEffects {
     this.actions$.pipe(
       ofType(TodoActions.getTodos),
       switchMap(({ page, limit }) => {
-        const skip = (page - 1) * limit;
 
         return this.http.get<any>(
           //`https://dummyjson.com/todos?limit=${limit}&skip=${skip}`

@@ -1,33 +1,31 @@
 import {ITodo} from './todo.model';
 import {createReducer, on} from '@ngrx/store';
 import * as TodoActions from './todo.actions';
+import {searchTodos} from './todo.actions';
 
 export interface ITodoState {
   todos: ITodo[];      // отфильтрованные
   allTodos: ITodo[];   // полный список
-  loading: boolean;
+  searchQuery: string;
 }
 
 export const initialState: ITodoState = {
   todos: [],
   allTodos: [],
-  loading: false,
-  //total: 0
+  searchQuery: ''
 };
 
 export const todoReducer = createReducer(
   initialState,
 
   on(TodoActions.getTodos, state => ({
-    ...state,
-    loading: true
+    ...state
   })),
 
   on(TodoActions.getTodosSuccess, (state, { todos }) => ({
     ...state,
     todos,
-    allTodos: todos,
-    loading: false
+    allTodos: todos
   })),
 
   on(TodoActions.editTodoSuccess, (state, { todo }) => ({
@@ -35,6 +33,18 @@ export const todoReducer = createReducer(
     todos: state.todos.map(t =>
       t.id === todo.id ? { ...t, ...todo } : t
     )
-  }))
+  })),
+
+  on(searchTodos, (state, { query }) => {
+    const filtered = state.allTodos.filter(todo =>
+      todo.todo.toLowerCase().includes(query.toLowerCase())
+    );
+
+    return {
+      ...state,
+      searchQuery: query,
+      todos: filtered
+    };
+  })
 
 );

@@ -1,20 +1,31 @@
-<div *ngFor="let todo of pagedTodos$ | async">
-  <todo-card
-    [id]="todo.id"
-    [todo]="todo.todo"
-    [completed]="todo.completed"
-    [userId]="todo.userId"
-    (onEditCard)="openModal(todo)"
-  >
-  </todo-card>
+<div class="todo-list-page">
+  <div class="search">
+    <input
+      [(ngModel)]="search"
+      (ngModelChange)="onSearch($event)"
+      placeholder="Search..."
+    >
+    <button (click)="clearSearch()">Clear</button>
+  </div>
+
+  <div *ngFor="let todo of pagedTodos$ | async">
+    <todo-card
+      [id]="todo.id"
+      [todo]="todo.todo"
+      [completed]="todo.completed"
+      [userId]="todo.userId"
+      (onEditCard)="openModal(todo)"
+    >
+    </todo-card>
+  </div>
+  <pagination
+    [page]="page"
+    [limit]="limit"
+    [total]="(todos$ | async)?.length || 0"
+    (pageChange)="onPageChange($event)"
+    (limitChange)="onLimitChange($event)"
+  ></pagination>
 </div>
-<pagination
-  [page]="page"
-  [limit]="limit"
-  [total]="(total$ | async)?.length || 0"
-  (pageChange)="onPageChange($event)"
-  (limitChange)="onLimitChange($event)"
-></pagination>
 
 <modal
   [isOpen]="isModalOpen"

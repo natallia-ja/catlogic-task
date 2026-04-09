@@ -26,3 +26,8 @@ export const editTodoFailure = createAction(
   '[Todo] Edit Todo Failure',
   props<{ error: any }>()
 );
+
+export const searchTodos = createAction(
+  '[Todo] Search Todos',
+  props<{ query: string }>()
+);

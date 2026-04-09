@@ -1,1 +1,27 @@
-<p>todo-table works!</p>
+<input
+  [(ngModel)]="search"
+  (ngModelChange)="onSearch($event)"
+  placeholder="Search..."
+>
+
+<button (click)="clearSearch()">Clear</button>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Todo</th>
+    <th>Completed</th>
+    <th>User ID</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let todo of todos$ | async">
+    <td>{{ todo.id }}</td>
+    <td>{{ todo.todo }}</td>
+    <td>{{ todo.completed }}</td>
+    <td>{{ todo.userId }}</td>
+  </tr>
+  </tbody>
+</table>
