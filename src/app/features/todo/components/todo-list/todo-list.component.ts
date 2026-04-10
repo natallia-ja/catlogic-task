@@ -34,6 +34,8 @@ export class TodoListComponent implements OnInit {
   selectedTodo: ITodo | null = null;
   todoForm!: FormGroup;
   search: string = '';
+  private initialSearchApplied = false;
+  private isDataLoaded = false;
   private searchSubject = new Subject<string>();
   constructor(
     private store: Store,
@@ -46,17 +48,36 @@ export class TodoListComponent implements OnInit {
 
   ngOnInit() {
     this.todos$ = this.store.select(selectTodos);
-    this.getTodos();
     this.updatePagedTodos();
+    this.todos$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(todos => {
+        if (
+          !this.initialSearchApplied &&
+          todos.length &&
+          this.search
+        ) {
+          this.store.dispatch(TodoActions.searchTodos({
+            query: this.search
+          }));
+
+          this.initialSearchApplied = true;
+        }
+      });
     this.route.queryParams
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params: IQueryParams) => {
-        if(params.page) this.page = +params.page;
-        if(params.limit) this.limit = +params.limit;
-        if (params.search) {
-          this.search = params.search;
-          this.searchSubject.next(this.search);
+
+        this.page = params.page ? +params.page : 1;
+        this.limit = params.limit ? +params.limit : 10;
+        this.search = params.search || '';
+
+        if (!this.isDataLoaded) {
+          this.getTodos();
+          this.isDataLoaded = true;
         }
+
+        this.updatePagedTodos();
       });
     this.searchSubject.pipe(
       debounceTime(300),
@@ -80,8 +101,8 @@ export class TodoListComponent implements OnInit {
   }
 
   onSearch(value: string) {
+    this.search = value;
     this.searchSubject.next(value);
-    this.updatePagedTodos();
     this.navigate();
   }
 
