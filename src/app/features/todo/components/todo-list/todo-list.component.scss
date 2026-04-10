@@ -1,8 +1,46 @@
-.red{
-  label{
-    color: red;
+.todo-list-page{
+  .red{
+    label{
+      color: red;
+    }
+    input{
+      border:solid red 2px;
+    }
   }
-  input{
-    border:solid red 2px;
+  &-search{
+    position: fixed;
+    top: 90px;
+  }
+  &-list{
+    height: 75vh;
+    overflow: scroll;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &-pagination{
+    position: fixed;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 900;
+  }
+
+  .form{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    &-item{
+      display: flex;
+      gap: 4px;
+      label{
+        width: 100px;
+      }
+    }
   }
 }
+

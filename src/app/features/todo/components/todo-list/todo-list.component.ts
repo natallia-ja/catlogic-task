@@ -11,7 +11,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ModalComponent} from '../../../../shared/modal/modal.component';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-//import {editTodo, searchTodos} from '../../store/todo.actions';
 
 export interface IQueryParams{
   page?: number;

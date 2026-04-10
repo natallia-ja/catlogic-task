@@ -1,21 +1,22 @@
 <div class="back" *ngIf="isOpen">
   <div class="modal">
     <div class="modal-header">
-      <h3>{{ modalTitle }}</h3>
+      <div class="font-text-bold">{{ modalTitle }}</div>
     </div>
-
     <div class="modal-body">
       <ng-content></ng-content>
     </div>
-
     <div class="modal-footer">
+      <button
+        class="save-button"
+        (click)="onConfirm()"
+      >
+        {{ confirmButtonName }}
+      </button>
       <button (click)="onCancel()">
         {{ cancelButtonName }}
       </button>
 
-      <button (click)="onConfirm()">
-        {{ confirmButtonName }}
-      </button>
     </div>
 
   </div>

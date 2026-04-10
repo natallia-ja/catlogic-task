@@ -15,5 +15,19 @@
   background: white;
   padding: 20px;
   border-radius: 8px;
-  min-width: 300px;
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: space-between;
+  &-footer{
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    .save-button{
+      background-color: var(--light-warm-color);
+      border-radius: 4px;
+      font-weight: bold;
+    }
+  }
 }

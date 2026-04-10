@@ -18,6 +18,7 @@ import {IQueryParams} from '../todo-list/todo-list.component';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './todo-table.component.html',
+  styleUrl: './todo-table.component.scss'
 })
 export class TodoTableComponent implements OnInit{
 

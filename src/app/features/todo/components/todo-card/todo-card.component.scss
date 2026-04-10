@@ -1,0 +1,55 @@
+.todo-card{
+  color: var(--dark-color);
+  display: flex;
+  background-color: var(--light-gray-color);
+  border-radius: 8px;
+  border: 1px solid var(--dark-color);
+  padding: 12px;
+
+  &-id{
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--light-warm-color);
+    border-radius: 16px;
+  }
+  &-main{
+    width: calc(100% - 100px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    &-content{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      width: 90%;
+      &-row{
+        display: flex;
+        gap: 4px;
+        justify-content: flex-start;
+      }
+    }
+    &-buttons{
+      width: 30px;
+      display: flex;
+      align-items: center;
+      div{
+        cursor: pointer;
+        padding: 7px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover{
+          background-color: var(--light-warm-color);
+        }
+        img{
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}

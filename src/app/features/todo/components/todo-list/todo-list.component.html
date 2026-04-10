@@ -1,5 +1,5 @@
 <div class="todo-list-page">
-  <div class="search">
+  <div class="todo-list-page-search search">
     <input
       [(ngModel)]="search"
       (ngModelChange)="onSearch($event)"
@@ -8,61 +8,72 @@
     <button (click)="clearSearch()">Clear</button>
   </div>
 
-  <div *ngFor="let todo of pagedTodos$ | async">
-    <todo-card
-      [id]="todo.id"
-      [todo]="todo.todo"
-      [completed]="todo.completed"
-      [userId]="todo.userId"
-      (onEditCard)="openModal(todo)"
-    >
-    </todo-card>
+  <div class="todo-list-page-list">
+    <div
+      class="todo-list-page-list-item"
+      *ngFor="let todo of pagedTodos$ | async">
+      <todo-card
+        [id]="todo.id"
+        [todo]="todo.todo"
+        [completed]="todo.completed"
+        [userId]="todo.userId"
+        (onEditCard)="openModal(todo)"
+      >
+      </todo-card>
+    </div>
   </div>
-  <pagination
-    [page]="page"
-    [limit]="limit"
-    [total]="(todos$ | async)?.length || 0"
-    (pageChange)="onPageChange($event)"
-    (limitChange)="onLimitChange($event)"
-  ></pagination>
+
+  <div class="todo-list-page-pagination">
+    <pagination
+      [page]="page"
+      [limit]="limit"
+      [total]="(todos$ | async)?.length || 0"
+      (pageChange)="onPageChange($event)"
+      (limitChange)="onLimitChange($event)"
+    ></pagination>
+  </div>
+  <modal
+    [isOpen]="isModalOpen"
+    modalTitle="Edit Todo"
+    confirmButtonName="Save"
+    cancelButtonName="Cancel"
+    (confirm)="editTodo()"
+    (cancel)="closeModal()"
+  >
+    <form [formGroup]="todoForm" class="form"
+          *ngIf="selectedTodo"
+    >
+      <div class="form-item">
+        <label>ID:</label>
+        <span>{{selectedTodo.id}}</span>
+      </div>
+      <div
+        [ngClass]="{'red': todoForm.controls['todo'].invalid && todoForm.controls['todo'].touched}"
+        class="form-item">
+        <label>Todo:</label>
+        <input
+          name="todo"
+          formControlName="todo"
+        />
+      </div>
+      <div class="form-item">
+        <label>Completed:</label>
+        <input
+          name="completed"
+          type="checkbox"
+          formControlName="completed"
+        />
+      </div>
+      <div
+        [ngClass]="{'red': todoForm.controls['userId'].invalid && todoForm.controls['userId'].touched}"
+        class="form-item">
+        <label>UserId:</label>
+        <input
+          name="userId"
+          formControlName="userId"
+        />
+      </div>
+    </form>
+  </modal>
 </div>
 
-<modal
-  [isOpen]="isModalOpen"
-  modalTitle="Edit Todo"
-  confirmButtonName="Save"
-  cancelButtonName="Cancel"
-  (confirm)="editTodo()"
-  (cancel)="closeModal()"
->
-  <form [formGroup]="todoForm" class="form"
-        *ngIf="selectedTodo"
-  >
-    <div
-      [ngClass]="{'red': todoForm.controls['todo'].invalid && todoForm.controls['todo'].touched}"
-      class="form-item">
-      <label>Todo</label><br>
-      <input
-        name="todo"
-        formControlName="todo"
-      />
-    </div>
-    <div class="form-item">
-      <label>Completed</label><br>
-      <input
-        name="completed"
-        type="checkbox"
-        formControlName="completed"
-      />
-    </div>
-    <div
-      [ngClass]="{'red': todoForm.controls['userId'].invalid && todoForm.controls['userId'].touched}"
-      class="form-item">
-      <label>userId</label><br>
-      <input
-        name="userId"
-        formControlName="userId"
-      />
-    </div>
-  </form>
-</modal>

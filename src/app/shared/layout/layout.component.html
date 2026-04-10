@@ -1,0 +1,29 @@
+<div class="layout">
+  <div
+    class="layout-background-layer"
+  ></div>
+  <div class="container font-text">
+    <div class="layout-header">
+      <nav class="navigation">
+        <div
+          class="navigation-item"
+          routerLink="/list"
+
+          routerLinkActive="active">
+          Todo List
+        </div>
+        <div
+          class="navigation-item"
+          routerLink="/table"
+
+          routerLinkActive="active">
+          Todo Table
+        </div>
+      </nav>
+    </div>
+    <div class="layout-main">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
