@@ -13,8 +13,6 @@
     flex-direction: column;
     margin: 0 auto;
     padding: 0 12px;
-
-
     @media (min-width: 768px){
       padding: 0 150px;
     }
@@ -40,7 +38,6 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-
     .navigation{
       display: flex;
       height: 100%;

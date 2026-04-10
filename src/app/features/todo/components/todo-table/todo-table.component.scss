@@ -3,42 +3,29 @@
     position: fixed;
     top: 90px;
   }
-/*  .table{
-    height: 75vh;
-    overflow: scroll;
-    margin-top: 50px;
-    background-color: var(--light-gray-color);
-  }*/
   .table {
-    max-height: 80vh; // регулируй под себя
+    max-height: 80vh;
     overflow-y: scroll;
     border: 1px solid #ddd;
     border-radius: 8px;
     margin-top: 50px;
     background-color: var(--light-gray-color);
-
     table {
       width: 100%;
       border-collapse: collapse;
     }
-
     th {
       position: sticky;
       top: 0;
       background: var(--light-gray-color);
       z-index: 1;
-
       text-align: left;
       padding: 10px;
       border-bottom: 2px solid var(--gray-color);
     }
-
     td {
       padding: 10px;
       border-bottom: 1px solid var(--gray-color);
     }
-
-
   }
-
 }

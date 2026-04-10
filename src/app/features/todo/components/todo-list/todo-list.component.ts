@@ -2,7 +2,7 @@ import {Component, DestroyRef, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import * as TodoActions from '../../store/todo.actions';
 import {ITodo} from '../../store/todo.model';
-import {selectPagedTodos, selectTodos, selectTotal} from '../../store/todo.selectors';
+import {selectPagedTodos, selectTodos} from '../../store/todo.selectors';
 import {CommonModule} from '@angular/common';
 import {TodoCardComponent} from '../todo-card/todo-card.component';
 import {debounceTime, distinctUntilChanged, Observable, Subject} from 'rxjs';
